@@ -3,7 +3,7 @@ tasks:
   - name: Terminal
     init: make # This will be done as a prebuild
     command: |
-      gp open .gitpod.yaml
+      gp open .gitpod.yml
       printf "Waiting for Sock Store at $(gp url 3000) ..."
       gp ports await 80
 
