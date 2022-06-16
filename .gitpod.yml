@@ -1,12 +1,11 @@
 
 tasks:
   - name: Terminal
-    init: make
+    init: make # This will be done as a prebuild
     command: |
-      printf "Waiting for Sock Store at $(gp url 3000) ..."
-      gp await-port 80
-      gp preview $(gp url 80) || true
       gp open deploy/docker-compose/docker-compose.yml
+      printf "Waiting for Sock Store at $(gp url 3000) ..."
+      gp ports await 80
 
   - name: Docker Compose
     command: docker-compose -f deploy/docker-compose/docker-compose.yml up
@@ -14,8 +13,8 @@ tasks:
 
 ports:
   - port: 80  # http
-    onOpen: notify
-  - port: 8080  # gitlab-docs
+    onOpen: open-preview
+  - port: 8080  # traefik
     onOpen: notify
 
 vscode:
